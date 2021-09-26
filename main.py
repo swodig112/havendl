@@ -3,6 +3,7 @@
 import requests
 import json
 import pyexiv2
+import argparse
 
 
 def download(havenid, api_key=None):
@@ -25,3 +26,15 @@ def download(havenid, api_key=None):
     for tag in data["tags"]:
         dic["Iptc.Application2.Keywords"].append(tag["name"])
     img.modify_iptc(dic)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Download a wallpaper from https://wallhaven.cc and tag it")
+    parser.add_argument("havenid", help="ID of the wallpaper")
+    parser.add_argument("--apikey", help="API key of the user")
+    args = parser.parse_args()
+    download(args.havenid, api_key=args.apikey)
+
+
+if __name__ == "__main__":
+    main()
